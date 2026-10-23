@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Prerolls</title>
+</head>
+<body>
+    <div id="PrerollsConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button">
+        <div data-role="content">
+            <div class="content-primary">
+                <form id="PrerollsConfigForm">
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="PrerollFolder">Preroll folder</label>
+                        <input id="PrerollFolder" name="PrerollFolder" type="text" is="emby-input" />
+                        <div class="fieldDescription">Path on the server to a folder with preroll videos. One random video from it is played before each movie. Users need "Cinema mode" enabled in their playback settings.</div>
+                    </div>
+                    <div>
+                        <button is="emby-button" type="submit" class="raised button-submit block emby-button">
+                            <span>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var PrerollsConfig = {
+                pluginUniqueId: 'e693551c-c3e4-4b05-a05e-ac3af29ff0e8'
+            };
+
+            document.querySelector('#PrerollsConfigPage')
+                .addEventListener('pageshow', function() {
+                    Dashboard.showLoadingMsg();
+                    ApiClient.getPluginConfiguration(PrerollsConfig.pluginUniqueId).then(function (config) {
+                        document.querySelector('#PrerollFolder').value = config.PrerollFolder || '';
+                        Dashboard.hideLoadingMsg();
+                    });
+                });
+
+            document.querySelector('#PrerollsConfigForm')
+                .addEventListener('submit', function(e) {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(PrerollsConfig.pluginUniqueId).then(function (config) {
+                    config.PrerollFolder = document.querySelector('#PrerollFolder').value.trim();
+                    ApiClient.updatePluginConfiguration(PrerollsConfig.pluginUniqueId, config).then(function (result) {
+                        Dashboard.processPluginConfigurationUpdateResult(result);
+                    });
+                });
+
+                e.preventDefault();
+                return false;
+            });
+        </script>
+    </div>
+</body>
+</html>

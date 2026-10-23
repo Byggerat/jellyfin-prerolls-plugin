@@ -1,0 +1,16 @@
+---
+name: "Prerolls"
+guid: "e693551c-c3e4-4b05-a05e-ac3af29ff0e8"
+version: "1.0.0.0"
+targetAbi: "12.0.0.0"
+framework: "net10.0"
+overview: "Play a random preroll before movies"
+description: >
+  Plays one random video from a configured folder before each movie,
+  never the same preroll twice in a row.
+category: "General"
+owner: "Byggerat"
+artifacts:
+- "Jellyfin.Plugin.Prerolls.dll"
+changelog: >
+  Initial release.

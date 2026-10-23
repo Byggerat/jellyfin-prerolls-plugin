@@ -23,4 +23,7 @@ The output is `Jellyfin.Plugin.Prerolls/bin/Release/net10.0/Jellyfin.Plugin.Prer
 
 - The folder must be readable by the Jellyfin server. With Docker, mount it into the container and enter the path as seen inside the container.
 - Supported file types: `.mp4 .mkv .m4v .mov .avi .webm .ts`.
+- The plugin folder must be owned by the user Jellyfin runs as (e.g. `chown -R 1000:1002`), otherwise the Dashboard → Plugins page can break.
+- To find the container path to enter, see [Finding the path for the preroll folder setting](documentation/development-notes.md#finding-the-path-for-the-preroll-folder-setting).
+- See [documentation/development-notes.md](documentation/development-notes.md) for internals and troubleshooting.
 - The folder does not need to be a library. The plugin adds each preroll to Jellyfin's database the first time it plays, because Jellyfin only plays intros that are in its database.
